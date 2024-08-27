@@ -1,0 +1,53 @@
+package com.example.my.domain.todo.dto.res;
+
+import java.util.List;
+
+import com.example.my.model.todo.entity.TodoEntity;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Getter
+public class ResTodoDTO {
+
+    private List<Todo> todoList;
+    private List<Todo> doneList;
+
+    public static ResTodoDTO of(List<TodoEntity> todoEntityList) {
+        return ResTodoDTO.builder()
+                .todoList(
+                        todoEntityList.stream()
+                                .filter(todoEntity -> todoEntity.getDoneYn().equals("N"))
+                                .map(todoEntity -> Todo.fromEntity(todoEntity))
+                                .toList())
+                .doneList(
+                        todoEntityList.stream()
+                                .filter(todoEntity -> todoEntity.getDoneYn().equals("Y"))
+                                .map(todoEntity -> Todo.fromEntity(todoEntity))
+                                .toList())
+                .build();
+    }
+
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    @Getter
+    public static class Todo {
+        private Long id;
+        private String content;
+        private String doneYn;
+
+        public static Todo fromEntity(TodoEntity todoEntity) {
+            return Todo.builder()
+                    .id(todoEntity.getId())
+                    .content(todoEntity.getContent())
+                    .doneYn(todoEntity.getDoneYn())
+                    .build();
+        }
+    }
+}
