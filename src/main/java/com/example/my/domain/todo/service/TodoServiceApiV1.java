@@ -6,6 +6,7 @@ import com.example.my.config.security.auth.CustomUserDetails;
 import com.example.my.domain.todo.dto.req.ReqTodoPostDTOApiV1;
 import com.example.my.domain.todo.dto.req.ReqTodoPutDTOApiV1;
 import com.example.my.domain.todo.dto.res.ResTodoGetDTOApiV1;
+import com.example.my.domain.todo.dto.res.ResTodoGetWithIdDTOApiV1;
 import com.example.my.model.todo.entity.TodoEntity;
 import com.example.my.model.todo.repository.TodoRepository;
 import com.example.my.model.user.entity.UserEntity;
@@ -29,10 +30,8 @@ public class TodoServiceApiV1 {
     private final UserRepository userRepository;
 
     public ResponseEntity<?> get(CustomUserDetails customUserDetails) {
-
         List<TodoEntity> todoEntityList = todoRepository
                 .findByUserEntity_IdAndDeleteDateIsNull(customUserDetails.getUser().getId());
-
         return new ResponseEntity<>(
                 ResDTO.builder()
                         .code(0)
@@ -42,21 +41,35 @@ public class TodoServiceApiV1 {
                 HttpStatus.OK);
     }
 
+    public ResponseEntity<?> getWithId(Long id, CustomUserDetails customUserDetails) {
+        Optional<TodoEntity> todoEntityOptional = todoRepository.findByIdAndDeleteDateIsNull(id);
+        if (todoEntityOptional.isEmpty()) {
+            throw new BadRequestException("존재하지 않는 할 일입니다.");
+        }
+        TodoEntity todoEntity = todoEntityOptional.get();
+        if (!todoEntity.getUserEntity().getId().equals(customUserDetails.getUser().getId())) {
+            throw new BadRequestException("해당 할 일을 조회할 권한이 없습니다.");
+        }
+        return new ResponseEntity<>(
+                ResDTO.builder()
+                        .code(0)
+                        .message("할 일 조회에 성공하였습니다.")
+                        .data(ResTodoGetWithIdDTOApiV1.of(todoEntity))
+                        .build(),
+                HttpStatus.OK);
+    }
+
     @Transactional
     public ResponseEntity<?> post(ReqTodoPostDTOApiV1 dto, CustomUserDetails customUserDetails) {
-
         if (dto == null || dto.getTodo() == null || dto.getTodo().getContent() == null
-                || dto.getTodo().getContent().trim().length() == 0) {
+                || dto.getTodo().getContent().isBlank()) {
             throw new BadRequestException("할 일을 입력해주세요.");
         }
-
         Optional<UserEntity> userEntityOptional = userRepository
                 .findByIdAndDeleteDateIsNull(customUserDetails.getUser().getId());
-
         if (userEntityOptional.isEmpty()) {
             throw new BadRequestException("존재하지 않는 사용자입니다.");
         }
-
         TodoEntity todoEntity = TodoEntity.builder()
                 .userEntity(userEntityOptional.get())
                 .content(dto.getTodo().getContent())
@@ -65,7 +78,6 @@ public class TodoServiceApiV1 {
                 .build();
 
         todoRepository.save(todoEntity);
-
         return new ResponseEntity<>(
                 ResDTO.builder()
                         .code(0)
@@ -75,23 +87,16 @@ public class TodoServiceApiV1 {
     }
 
     @Transactional
-    public ResponseEntity<?> put(Long id, ReqTodoPutDTOApiV1 dto,
-                                 CustomUserDetails customUserDetails) {
-
+    public ResponseEntity<?> put(Long id, ReqTodoPutDTOApiV1 dto, CustomUserDetails customUserDetails) {
         Optional<TodoEntity> todoEntityOptional = todoRepository.findByIdAndDeleteDateIsNull(id);
-
         if (todoEntityOptional.isEmpty()) {
             throw new BadRequestException("존재하지 않는 할 일입니다.");
         }
-
         TodoEntity todoEntity = todoEntityOptional.get();
-
         if (!todoEntity.getUserEntity().getId().equals(customUserDetails.getUser().getId())) {
             throw new BadRequestException("권한이 없습니다.");
         }
-
         todoEntity.setDoneYn(dto.getTodo().getDoneYn());
-
         return new ResponseEntity<>(
                 ResDTO.builder()
                         .code(0)
@@ -102,21 +107,15 @@ public class TodoServiceApiV1 {
 
     @Transactional
     public ResponseEntity<?> delete(Long id, CustomUserDetails customUserDetails) {
-
         Optional<TodoEntity> todoEntityOptional = todoRepository.findByIdAndDeleteDateIsNull(id);
-
         if (todoEntityOptional.isEmpty()) {
             throw new BadRequestException("존재하지 않는 할 일입니다.");
         }
-
         TodoEntity todoEntity = todoEntityOptional.get();
-
         if (!todoEntity.getUserEntity().getId().equals(customUserDetails.getUser().getId())) {
             throw new BadRequestException("권한이 없습니다.");
         }
-
         todoEntity.setDeleteDate(LocalDateTime.now());
-
         return new ResponseEntity<>(
                 ResDTO.builder()
                         .code(0)

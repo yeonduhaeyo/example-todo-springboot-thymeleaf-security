@@ -37,6 +37,7 @@ public class ResTodoGetDTOApiV1 {
     @Builder
     @Getter
     public static class Todo {
+
         private Long id;
         private String content;
         private String doneYn;
@@ -48,5 +49,7 @@ public class ResTodoGetDTOApiV1 {
                     .doneYn(todoEntity.getDoneYn())
                     .build();
         }
+
     }
+
 }

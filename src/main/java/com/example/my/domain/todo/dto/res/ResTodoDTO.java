@@ -37,6 +37,7 @@ public class ResTodoDTO {
     @Builder
     @Getter
     public static class Todo {
+
         private Long id;
         private String content;
         private String doneYn;

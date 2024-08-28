@@ -18,11 +18,8 @@ public class TodoService {
     private final TodoRepository todoRepository;
 
     public ResTodoDTO getTodoTableData(CustomUserDetails customUserDetails) {
-
         List<TodoEntity> todoEntityList = todoRepository.findByUserEntity_IdAndDeleteDateIsNull(customUserDetails.getUser().getId());
-
         return ResTodoDTO.of(todoEntityList);
-
     }
 
 }

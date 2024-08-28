@@ -23,7 +23,9 @@ public class ReqTodoPostDTOApiV1 {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Todo {
+
         @NotBlank(message = "할 일을 입력해주세요.")
         private String content;
+
     }
 }

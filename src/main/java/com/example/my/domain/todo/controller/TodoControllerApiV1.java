@@ -24,6 +24,14 @@ public class TodoControllerApiV1 {
         return todoServiceApiV1.get(customUserDetails);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getWithId(
+            @AuthenticationPrincipal CustomUserDetails customUserDetails,
+            @PathVariable Long id
+    ) {
+        return todoServiceApiV1.getWithId(id, customUserDetails);
+    }
+
     @PostMapping
     public ResponseEntity<?> post(
             @Valid @RequestBody ReqTodoPostDTOApiV1 dto,

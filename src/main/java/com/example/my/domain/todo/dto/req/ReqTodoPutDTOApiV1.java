@@ -25,9 +25,11 @@ public class ReqTodoPutDTOApiV1 {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Todo {
+
         @NotNull(message = "완료 여부를 입력해주세요.")
         @Pattern(regexp = Constants.Regex.TODO_DONE_YN, message = "doneYn은 N 또는 Y로 입력해주세요.")
         private String doneYn;
+
     }
 
 }
