@@ -1,26 +1,24 @@
 package com.example.my.domain.todo.service;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.example.my.common.dto.ResDTO;
 import com.example.my.common.exception.BadRequestException;
 import com.example.my.config.security.auth.CustomUserDetails;
 import com.example.my.domain.todo.dto.req.ReqTodoPostDTOApiV1;
 import com.example.my.domain.todo.dto.req.ReqTodoPutDTOApiV1;
-import com.example.my.domain.todo.dto.res.ResTodoDTO;
+import com.example.my.domain.todo.dto.res.ResTodoGetDTOApiV1;
 import com.example.my.model.todo.entity.TodoEntity;
 import com.example.my.model.todo.repository.TodoRepository;
 import com.example.my.model.user.entity.UserEntity;
 import com.example.my.model.user.repository.UserRepository;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -39,7 +37,7 @@ public class TodoServiceApiV1 {
                 ResDTO.builder()
                         .code(0)
                         .message("할 일 목록 조회에 성공하였습니다.")
-                        .data(ResTodoDTO.of(todoEntityList))
+                        .data(ResTodoGetDTOApiV1.of(todoEntityList))
                         .build(),
                 HttpStatus.OK);
     }

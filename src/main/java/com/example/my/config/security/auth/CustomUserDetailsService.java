@@ -1,17 +1,15 @@
 package com.example.my.config.security.auth;
 
-import java.util.Optional;
-
+import com.example.my.model.user.entity.UserEntity;
+import com.example.my.model.user.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.my.model.user.entity.UserEntity;
-import com.example.my.model.user.repository.UserRepository;
-
-import lombok.RequiredArgsConstructor;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

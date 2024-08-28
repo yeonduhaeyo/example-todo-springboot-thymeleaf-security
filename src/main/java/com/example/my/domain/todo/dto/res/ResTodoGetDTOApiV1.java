@@ -12,13 +12,13 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Getter
-public class ResTodoDTO {
+public class ResTodoGetDTOApiV1 {
 
     private List<Todo> todoList;
     private List<Todo> doneList;
 
-    public static ResTodoDTO of(List<TodoEntity> todoEntityList) {
-        return ResTodoDTO.builder()
+    public static ResTodoGetDTOApiV1 of(List<TodoEntity> todoEntityList) {
+        return ResTodoGetDTOApiV1.builder()
                 .todoList(
                         todoEntityList.stream()
                                 .filter(todoEntity -> todoEntity.getDoneYn().equals("N"))

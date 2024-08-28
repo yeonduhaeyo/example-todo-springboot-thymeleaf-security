@@ -27,7 +27,7 @@ public class TodoEntity {
     @Column(name = "content", nullable = false)
     private String content;
 
-    @Column(name = "done_yn" , nullable = false)
+    @Column(name = "done_yn", nullable = false)
     private String doneYn;
 
     @Column(name = "create_date", nullable = false)

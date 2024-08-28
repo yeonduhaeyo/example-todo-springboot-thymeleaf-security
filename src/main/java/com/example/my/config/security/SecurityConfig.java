@@ -34,7 +34,7 @@ public class SecurityConfig {
 
         httpSecurity.csrf(config -> config.disable());
 
-        if ("dev".equals(activeProfile)) {
+        if ("dev" .equals(activeProfile)) {
             httpSecurity.headers(config -> config
                     .frameOptions(frameOptionsConfig -> frameOptionsConfig
                             .disable()
@@ -57,6 +57,7 @@ public class SecurityConfig {
                         mvcMatcherBuilder.pattern("/css/**"),
                         mvcMatcherBuilder.pattern("/js/**"),
                         mvcMatcherBuilder.pattern("/assets/**"),
+                        mvcMatcherBuilder.pattern("/springdoc/**"),
                         mvcMatcherBuilder.pattern("/favicon.ico")
                 )
                 .permitAll()
@@ -70,12 +71,14 @@ public class SecurityConfig {
         httpSecurity.authorizeHttpRequests(config -> config
                 .requestMatchers(
                         mvcMatcherBuilder.pattern("/auth/**"),
-                        mvcMatcherBuilder.pattern("/api/*/auth/**")
+                        mvcMatcherBuilder.pattern("/v*/auth/**"),
+                        mvcMatcherBuilder.pattern("/docs/**"),
+                        mvcMatcherBuilder.pattern("/swagger-ui/**")
                 )
                 .permitAll()
                 .requestMatchers(
                         mvcMatcherBuilder.pattern("/admin/**"),
-                        mvcMatcherBuilder.pattern("/api/*/admin/**")
+                        mvcMatcherBuilder.pattern("/v*/admin/**")
                 )
                 .hasRole("ADMIN")
                 .anyRequest()
@@ -84,7 +87,7 @@ public class SecurityConfig {
 
         httpSecurity.formLogin(config -> config
                 .loginPage("/auth/login")
-                .loginProcessingUrl("/api/v1/auth/login")
+                .loginProcessingUrl("/v*/auth/login")
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .successHandler(customAuthenticationSuccessHandler)

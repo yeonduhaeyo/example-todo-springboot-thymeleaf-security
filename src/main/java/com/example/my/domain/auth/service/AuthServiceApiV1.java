@@ -1,21 +1,19 @@
 package com.example.my.domain.auth.service;
 
-import java.time.LocalDateTime;
-import java.util.Optional;
-
+import com.example.my.common.dto.ResDTO;
+import com.example.my.common.exception.BadRequestException;
+import com.example.my.domain.auth.dto.req.ReqJoinDTOApiV1;
+import com.example.my.model.user.entity.UserEntity;
+import com.example.my.model.user.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.my.common.dto.ResDTO;
-import com.example.my.common.exception.BadRequestException;
-import com.example.my.domain.auth.dto.req.ReqJoinDTOApiV1;
-import com.example.my.model.user.entity.UserEntity;
-import com.example.my.model.user.repository.UserRepository;
-
-import lombok.RequiredArgsConstructor;
+import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -26,7 +24,7 @@ public class AuthServiceApiV1 {
 
     private final PasswordEncoder passwordEncoder;
 
-//    public ResponseEntity<?> login(ReqLoginDTO dto, HttpSession session){
+//    public ResponseEntity<?> login(ReqLoginDTOApiV1 dto, HttpSession session){
 //        Optional<UserEntity> userEntityOptional = userRepository.findByIdAndDeleteDateIsNull(dto.getUser().getId());
 //
 //        if (userEntityOptional.isEmpty()) {

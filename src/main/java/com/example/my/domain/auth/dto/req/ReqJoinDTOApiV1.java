@@ -8,19 +8,20 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Getter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
 public class ReqJoinDTOApiV1 {
 
     @Valid
     @NotNull(message = "회원 정보를 입력해주세요.")
     private User user;
 
+    @Getter
+    @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    @Builder
-    @Getter
     public static class User {
 
         @NotBlank(message = "아이디를 입력해주세요.")

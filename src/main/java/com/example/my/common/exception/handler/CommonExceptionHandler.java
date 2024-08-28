@@ -18,8 +18,8 @@ import java.util.Map;
 public class CommonExceptionHandler {
 
     @ExceptionHandler(BindException.class)
-    public HttpEntity<?> handleBindException(BindException exception){
-        Map<String,String> errorMap = new HashMap<>();
+    public HttpEntity<?> handleBindException(BindException exception) {
+        Map<String, String> errorMap = new HashMap<>();
 
         exception.getBindingResult().getFieldErrors().forEach(fieldError -> {
             errorMap.put(fieldError.getField(), fieldError.getDefaultMessage());
@@ -27,17 +27,17 @@ public class CommonExceptionHandler {
 
         return new ResponseEntity<>(
                 ResDTO.builder()
-                .code(1)
-                .message("요청 데이터가 유효하지 않습니다.")
-                .data(errorMap)
-                .build(),
+                        .code(1)
+                        .message("요청 데이터가 유효하지 않습니다.")
+                        .data(errorMap)
+                        .build(),
                 HttpStatus.BAD_REQUEST
         );
 
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public HttpEntity<?> handleEntityNotFoundException(){
+    public HttpEntity<?> handleEntityNotFoundException() {
         return new ResponseEntity<>(
                 ResDTO.builder()
                         .code(1)
@@ -48,7 +48,7 @@ public class CommonExceptionHandler {
     }
 
     @ExceptionHandler(InvalidSessionException.class)
-    public HttpEntity<?> handleInvalidSessionException(Exception exception){
+    public HttpEntity<?> handleInvalidSessionException(Exception exception) {
         return new ResponseEntity<>(
                 ResDTO.builder()
                         .code(1)
@@ -59,7 +59,7 @@ public class CommonExceptionHandler {
     }
 
     @ExceptionHandler(BadRequestException.class)
-    public HttpEntity<?> handleBadRequestException(Exception exception){
+    public HttpEntity<?> handleBadRequestException(Exception exception) {
 
         return new ResponseEntity<>(
                 ResDTO.builder()
@@ -71,10 +71,10 @@ public class CommonExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    public HttpEntity<?> handleException(Exception exception){
+    public HttpEntity<?> handleException(Exception exception) {
         String message = "에러가 발생했습니다. 관리자에게 문의하세요.";
 
-        if (exception.getMessage() != null && !exception.getMessage().equals("")){
+        if (exception.getMessage() != null && !exception.getMessage().equals("")) {
             message = exception.getMessage();
         }
 
