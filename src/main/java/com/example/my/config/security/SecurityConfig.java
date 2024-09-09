@@ -1,8 +1,6 @@
 package com.example.my.config.security;
 
-import com.example.my.config.security.auth.CustomAuthenticationFailureHandler;
-import com.example.my.config.security.auth.CustomAuthenticationSuccessHandler;
-import com.example.my.config.security.auth.CustomLogoutSuccessHandler;
+import com.example.my.config.security.auth.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -24,6 +22,8 @@ public class SecurityConfig {
     @Value("${spring.profiles.active}")
     String activeProfile;
 
+//    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
+    private final CustomAccessDeniedHandler customAccessDeniedHandler;
     private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
     private final CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
     private final CustomLogoutSuccessHandler customLogoutSuccessHandler;
@@ -31,8 +31,6 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, HandlerMappingIntrospector introspector) throws Exception {
         MvcRequestMatcher.Builder mvcMatcherBuilder = new MvcRequestMatcher.Builder(introspector);
-
-        httpSecurity.csrf(config -> config.disable());
 
         if ("dev" .equals(activeProfile)) {
             httpSecurity.headers(config -> config
@@ -51,6 +49,14 @@ public class SecurityConfig {
                     .hasRole("ADMIN")
             );
         }
+
+
+        httpSecurity.csrf(config -> config.disable());
+
+        httpSecurity.exceptionHandling(config -> config
+//                .authenticationEntryPoint(customAuthenticationEntryPoint)
+                .accessDeniedHandler(customAccessDeniedHandler)
+        );
 
         httpSecurity.authorizeHttpRequests(config -> config
                 .requestMatchers(

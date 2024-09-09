@@ -3,6 +3,7 @@ package com.example.my.common.exception.handler;
 import com.example.my.common.constants.Constants;
 import com.example.my.common.dto.ResDTO;
 import com.example.my.common.exception.AuthenticationException;
+import com.example.my.common.exception.AuthorityException;
 import com.example.my.common.exception.BadRequestException;
 import com.example.my.common.exception.EntityAlreadyExistException;
 import jakarta.validation.ConstraintViolationException;
@@ -174,6 +175,7 @@ public class CommonExceptionHandler {
     }
 
     @ExceptionHandler(AuthenticationException.class)
+    @Deprecated
     public HttpEntity<?> handleAuthenticationException(Exception e) {
         return new ResponseEntity<>(
                 ResDTO.builder()
@@ -181,6 +183,18 @@ public class CommonExceptionHandler {
                         .message("로그인이 필요한 서비스입니다.")
                         .build(),
                 HttpStatus.UNAUTHORIZED
+        );
+    }
+
+    @ExceptionHandler(AuthorityException.class)
+    @Deprecated
+    public HttpEntity<?> handleAuthorityException(Exception e) {
+        return new ResponseEntity<>(
+                ResDTO.builder()
+                        .code(Constants.ResCode.AUTHORITY_EXCEPTION)
+                        .message("권한이 없습니다.")
+                        .build(),
+                HttpStatus.FORBIDDEN
         );
     }
 
