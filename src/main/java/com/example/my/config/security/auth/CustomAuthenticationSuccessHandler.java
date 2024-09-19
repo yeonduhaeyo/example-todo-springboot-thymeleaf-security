@@ -1,5 +1,6 @@
 package com.example.my.config.security.auth;
 
+import com.example.my.common.constants.Constants;
 import com.example.my.common.dto.ResDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
@@ -42,7 +43,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         response.setContentType("application/json;charset=UTF-8");
         response.getWriter().print(objectMapper.writeValueAsString(
                 ResDTO.builder()
-                        .code(0)
+                        .code(Constants.ResCode.OK)
                         .message("로그인에 성공하였습니다.")
                         .build()
         ));
