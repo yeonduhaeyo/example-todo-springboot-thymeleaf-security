@@ -3,8 +3,11 @@ package com.example.my.domain.auth.service;
 import com.example.my.common.dto.ResDTO;
 import com.example.my.common.exception.BadRequestException;
 import com.example.my.domain.auth.dto.req.ReqJoinDTOApiV1;
+import com.example.my.model.user.constraint.RoleType;
 import com.example.my.model.user.entity.UserEntity;
+import com.example.my.model.user.entity.UserRoleEntity;
 import com.example.my.model.user.repository.UserRepository;
+import com.example.my.model.user.repository.UserRoleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +24,7 @@ import java.util.Optional;
 public class AuthServiceApiV1 {
 
     private final UserRepository userRepository;
+    private final UserRoleRepository userRoleRepository;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -55,7 +59,12 @@ public class AuthServiceApiV1 {
                 .password(passwordEncoder.encode(dto.getUser().getPassword()))
                 .createDate(LocalDateTime.now())
                 .build();
-        userRepository.save(userEntityForSaving);
+        UserEntity userEntity = userRepository.save(userEntityForSaving);
+        UserRoleEntity userRoleEntityForSaving = UserRoleEntity.builder()
+                .userEntity(userEntity)
+                .role(RoleType.USER)
+                .build();
+        userRoleRepository.save(userRoleEntityForSaving);
         return new ResponseEntity<>(
                 ResDTO.builder()
                         .code(0)

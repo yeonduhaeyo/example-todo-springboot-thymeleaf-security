@@ -1,5 +1,6 @@
 package com.example.my.model.user.entity;
 
+import com.example.my.model.user.constraint.RoleType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,8 +24,9 @@ public class UserRoleEntity {
     @JoinColumn(name = "user_id", referencedColumnName = "id", updatable = false, nullable = false)
     private UserEntity userEntity;
 
-    @Column(name = "role")
-    private String role;
+    @Column(name = "role", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private RoleType role;
 
     @Column(name = "create_date")
     private LocalDateTime createDate;

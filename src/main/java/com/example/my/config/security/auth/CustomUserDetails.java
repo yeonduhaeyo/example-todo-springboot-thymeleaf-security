@@ -42,7 +42,7 @@ public class CustomUserDetails implements UserDetails {
                     .roleList(
                             userEntity.getUserRoleEntityList()
                                     .stream()
-                                    .map(userRoleEntity -> userRoleEntity.getRole())
+                                    .map(userRoleEntity -> userRoleEntity.getRole().toString())
                                     .toList())
                     .build();
         }
