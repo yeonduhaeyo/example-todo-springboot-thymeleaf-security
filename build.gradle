@@ -1,8 +1,9 @@
+
 plugins {
     id 'java'
     id 'org.springframework.boot' version '3.1.2'
     id 'io.spring.dependency-management' version '1.1.2'
-    id 'com.epages.restdocs-api-spec' version "0.18.2"
+    id 'com.epages.restdocs-api-spec' version "0.19.2"
 }
 
 group = 'com.example'
@@ -44,8 +45,9 @@ dependencies {
     // restdocs & openapi
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
-    testImplementation('com.epages:restdocs-api-spec-mockmvc:0.18.2')
-    testImplementation('com.epages:restdocs-api-spec-webtestclient:0.18.2')
+    testImplementation('com.epages:restdocs-api-spec-mockmvc:0.19.2')
+    testImplementation('com.epages:restdocs-api-spec-webtestclient:0.19.2')
+    testImplementation('com.epages:restdocs-api-spec-postman-generator:0.19.2')
 }
 
 tasks.named('test') {
@@ -56,29 +58,53 @@ compileJava {
     dependsOn 'clean'
 }
 
+postman {
+//    baseUrl = "https://실서버도메인"
+    baseUrl = 'https://localhost:8080'
+    title = 'TODO API'
+    version = '1.0.0'
+}
+
 openapi3 {
+//    server = "https://실서버도메인"
     server = "http://localhost:8080"
     title = 'TODO API'
     description = ''
     version = '1.0.0'
-    format = 'json'
+    format = 'yaml'
 }
 
-tasks.register('createOpenApi') {
+// https://velog.io/@hwsa1004/Spring-restdocs-swagger-%EA%B0%99%EC%9D%B4-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0
+// https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#security-scheme-object
+tasks.register('setDocs') {
+    dependsOn 'postman'
     dependsOn 'openapi3'
+//    doFirst {
+//        def openapi3File = file("${openapi3.outputDirectory}/openapi3.yaml")
+//        def securitySchemesContent =
+//                "  securitySchemes:\n" +
+//                        "    JWT:\n" +
+//                        "      type: http\n" +
+//                        "      scheme: bearer\n" +
+//                        "      bearerFormat: JWT\n" +
+//                        "security:\n" +
+//                        "  - JWT: []"
+//        openapi3File.append securitySchemesContent
+//    }
     doLast {
         copy {
             from "build/api-spec"
             include "*.json"
+            include "*.yaml"
             into "build/resources/main/static/springdoc"
         }
     }
 }
 
 bootRun {
-    dependsOn 'createOpenApi'
+    dependsOn 'setDocs'
 }
 
 bootJar {
-    dependsOn 'createOpenApi'
+    dependsOn 'setDocs'
 }
