@@ -40,11 +40,11 @@ springdoc:
   swagger-ui:
     enabled: true
     path: /docs
-    url: /springdoc/openapi3.yaml
+    url: /springdoc/openapi3.json
     operations-sorter: alpha
     tags-sorter: alpha
   api-docs:
     enabled: true
-    path: /docs/yaml
+    path: /docs/json
   cache:
     disabled: true
