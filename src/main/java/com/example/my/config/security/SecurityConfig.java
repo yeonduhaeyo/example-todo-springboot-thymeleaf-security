@@ -22,7 +22,6 @@ public class SecurityConfig {
     @Value("${spring.profiles.active}")
     String activeProfile;
 
-//    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
     private final CustomAccessDeniedHandler customAccessDeniedHandler;
     private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
     private final CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
@@ -38,12 +37,6 @@ public class SecurityConfig {
                             .disable()
                     )
             );
-
-//        httpSecurity.authorizeHttpRequests(config -> config
-//                .requestMatchers(PathRequest.toH2Console())
-//                .permitAll()
-//        );
-
             httpSecurity.authorizeHttpRequests(config -> config
                     .requestMatchers(AntPathRequestMatcher.antMatcher("/h2/**"))
                     .hasRole("ADMIN")
@@ -54,7 +47,6 @@ public class SecurityConfig {
         httpSecurity.csrf(config -> config.disable());
 
         httpSecurity.exceptionHandling(config -> config
-//                .authenticationEntryPoint(customAuthenticationEntryPoint)
                 .accessDeniedHandler(customAccessDeniedHandler)
         );
 

@@ -28,6 +28,7 @@ public class AuthServiceApiV1 {
 
     private final PasswordEncoder passwordEncoder;
 
+// 시큐리티 없을 때의 코드
 //    public ResponseEntity<?> login(ReqLoginDTOApiV1 dto, HttpSession session){
 //        Optional<UserEntity> userEntityOptional = userRepository.findByIdAndDeleteDateIsNull(dto.getUser().getId());
 //        if (userEntityOptional.isEmpty()) {
@@ -55,7 +56,7 @@ public class AuthServiceApiV1 {
         }
         UserEntity userEntityForSaving = UserEntity.builder()
                 .username(dto.getUser().getUsername())
-//                .password(dto.getUser().getPassword())
+//                .password(dto.getUser().getPassword()) // 시큐리티 없을 때의 코드
                 .password(passwordEncoder.encode(dto.getUser().getPassword()))
                 .createDate(LocalDateTime.now())
                 .build();

@@ -19,6 +19,7 @@ public class TodoController {
     public ModelAndView todoTablePage(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
         ModelAndView modelAndView = new ModelAndView();
 
+        // 시큐리티 없을 때의 코드
 //        if (session.getAttribute("loginUserDTO") == null) {
 //            modelAndView.setViewName("redirect:/auth/login");
 //            return modelAndView;

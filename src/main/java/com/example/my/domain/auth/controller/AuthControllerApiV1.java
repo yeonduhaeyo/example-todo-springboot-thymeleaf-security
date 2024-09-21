@@ -17,6 +17,7 @@ public class AuthControllerApiV1 {
 
     private final AuthServiceApiV1 authServiceApiV1;
 
+    // 시큐리티 없을 때의 코드
 //    @PostMapping("/login")
 //    public ResponseEntity<?> login(@Valid @RequestBody ReqLoginDTOApiV1 dto, HttpSession session) {
 //        return authServiceApiV1.login(dto, session);

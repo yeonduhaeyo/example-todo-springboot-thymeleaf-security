@@ -22,22 +22,12 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException, ServletException {
-        AuthenticationSuccessHandler.super.onAuthenticationSuccess(request, response, chain, authentication);
-
-//        response.setStatus(HttpServletResponse.SC_OK);
-//        response.setCharacterEncoding("UTF-8");
-//        response.setContentType("application/json;charset=UTF-8");
-//        response.getWriter().print(objectMapper.writeValueAsString(
-//                ResDTO.builder()
-//                        .code(0)
-//                        .message("로그인에 성공하였습니다.")
-//                        .build()
-//        ));
+        onAuthenticationSuccess(request, response, authentication);
+        chain.doFilter(request, response);
     }
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-
         response.setStatus(HttpServletResponse.SC_OK);
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json;charset=UTF-8");
@@ -47,6 +37,5 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
                         .message("로그인에 성공하였습니다.")
                         .build()
         ));
-
     }
 }

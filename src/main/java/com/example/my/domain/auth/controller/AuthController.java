@@ -21,6 +21,7 @@ public class AuthController {
         return modelAndView;
     }
 
+    // 시큐리티 없을 때의 코드
 //    @GetMapping("/auth/logout")
 //    public ModelAndView logout(HttpSession session) {
 //
