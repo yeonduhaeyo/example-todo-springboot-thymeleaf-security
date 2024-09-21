@@ -43,9 +43,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
     // restdocs & openapi
-    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
-    testImplementation('com.epages:restdocs-api-spec-mockmvc:0.19.2')
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
+    testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.19.2'
 }
 
 tasks.named('test') {
@@ -72,8 +72,6 @@ openapi3 {
     format = 'json'
 }
 
-// https://velog.io/@hwsa1004/Spring-restdocs-swagger-%EA%B0%99%EC%9D%B4-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0
-// https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#security-scheme-object
 tasks.register('setDocs') {
     dependsOn 'postman'
     dependsOn 'openapi3'
