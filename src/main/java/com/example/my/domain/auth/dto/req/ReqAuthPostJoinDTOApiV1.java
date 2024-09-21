@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReqJoinDTOApiV1 {
+public class ReqAuthPostJoinDTOApiV1 {
 
     @Valid
     @NotNull(message = "회원 정보를 입력해주세요.")

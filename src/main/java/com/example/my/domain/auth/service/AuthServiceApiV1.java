@@ -2,7 +2,7 @@ package com.example.my.domain.auth.service;
 
 import com.example.my.common.dto.ResDTO;
 import com.example.my.common.exception.BadRequestException;
-import com.example.my.domain.auth.dto.req.ReqJoinDTOApiV1;
+import com.example.my.domain.auth.dto.req.ReqAuthPostJoinDTOApiV1;
 import com.example.my.model.user.constraint.RoleType;
 import com.example.my.model.user.entity.UserEntity;
 import com.example.my.model.user.entity.UserRoleEntity;
@@ -29,7 +29,7 @@ public class AuthServiceApiV1 {
     private final PasswordEncoder passwordEncoder;
 
 // 시큐리티 없을 때의 코드
-//    public ResponseEntity<?> login(ReqLoginDTOApiV1 dto, HttpSession session){
+//    public ResponseEntity<?> login(ReqAuthPostLoginDTOApiV1 dto, HttpSession session){
 //        Optional<UserEntity> userEntityOptional = userRepository.findByIdAndDeleteDateIsNull(dto.getUser().getId());
 //        if (userEntityOptional.isEmpty()) {
 //            throw new BadRequestException("존재하지 않는 사용자입니다.");
@@ -49,7 +49,7 @@ public class AuthServiceApiV1 {
 //    }
 
     @Transactional
-    public ResponseEntity<ResDTO<Object>> join(ReqJoinDTOApiV1 dto) {
+    public ResponseEntity<ResDTO<Object>> join(ReqAuthPostJoinDTOApiV1 dto) {
         Optional<UserEntity> userEntityOptional = userRepository.findByUsername(dto.getUser().getUsername());
         if (userEntityOptional.isPresent()) {
             throw new BadRequestException("이미 존재하는 아이디입니다.");

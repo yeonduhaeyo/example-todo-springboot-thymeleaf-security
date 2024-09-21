@@ -10,14 +10,14 @@ public class AuthController {
     @GetMapping("/auth/login")
     public ModelAndView loginPage() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("auth/login");
+        modelAndView.setViewName("/auth/login");
         return modelAndView;
     }
 
     @GetMapping("/auth/join")
     public ModelAndView joinPage() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("auth/join");
+        modelAndView.setViewName("/auth/join");
         return modelAndView;
     }
 

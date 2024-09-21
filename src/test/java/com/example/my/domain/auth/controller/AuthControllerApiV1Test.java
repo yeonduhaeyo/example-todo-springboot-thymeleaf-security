@@ -2,7 +2,7 @@ package com.example.my.domain.auth.controller;
 
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.example.my.common.constants.Constants;
-import com.example.my.domain.auth.dto.req.ReqJoinDTOApiV1;
+import com.example.my.domain.auth.dto.req.ReqAuthPostJoinDTOApiV1;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,9 +48,9 @@ public class AuthControllerApiV1Test {
 
     @Test
     public void testJoinSuccess() throws Exception {
-        ReqJoinDTOApiV1 reqDto = ReqJoinDTOApiV1.builder()
+        ReqAuthPostJoinDTOApiV1 reqDto = ReqAuthPostJoinDTOApiV1.builder()
                 .user(
-                        ReqJoinDTOApiV1.User.builder()
+                        ReqAuthPostJoinDTOApiV1.User.builder()
                                 .username("temp")
                                 .password("123")
                                 .build()

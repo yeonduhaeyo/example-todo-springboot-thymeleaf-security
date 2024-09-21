@@ -1,7 +1,7 @@
 package com.example.my.domain.auth.controller;
 
 import com.example.my.common.dto.ResDTO;
-import com.example.my.domain.auth.dto.req.ReqJoinDTOApiV1;
+import com.example.my.domain.auth.dto.req.ReqAuthPostJoinDTOApiV1;
 import com.example.my.domain.auth.service.AuthServiceApiV1;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,12 +20,12 @@ public class AuthControllerApiV1 {
 
     // 시큐리티 없을 때의 코드
 //    @PostMapping("/login")
-//    public ResponseEntity<?> login(@Valid @RequestBody ReqLoginDTOApiV1 dto, HttpSession session) {
+//    public ResponseEntity<?> login(@Valid @RequestBody ReqAuthPostLoginDTOApiV1 dto, HttpSession session) {
 //        return authServiceApiV1.login(dto, session);
 //    }
 
     @PostMapping("/join")
-    public ResponseEntity<ResDTO<Object>> join(@Valid @RequestBody ReqJoinDTOApiV1 dto) {
+    public ResponseEntity<ResDTO<Object>> join(@Valid @RequestBody ReqAuthPostJoinDTOApiV1 dto) {
         return authServiceApiV1.join(dto);
     }
 

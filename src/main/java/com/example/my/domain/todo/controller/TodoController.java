@@ -29,7 +29,7 @@ public class TodoController {
 
         ResTodoDTO dto = todoService.getTodoTableData(customUserDetails);
         modelAndView.addObject("dto", dto);
-        modelAndView.setViewName("todo/table");
+        modelAndView.setViewName("/todo/table");
         return modelAndView;
     }
 

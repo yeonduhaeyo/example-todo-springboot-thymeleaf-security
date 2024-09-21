@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Deprecated
-public class ReqLoginDTOApiV1 { // 시큐리티 없을 때의 코드
+public class ReqAuthPostLoginDTOApiV1 { // 시큐리티 없을 때의 코드
 
     @Valid
     @NotNull(message = "회원 정보를 입력해주세요.")
