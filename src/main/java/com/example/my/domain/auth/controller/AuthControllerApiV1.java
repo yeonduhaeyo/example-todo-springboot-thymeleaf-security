@@ -1,5 +1,6 @@
 package com.example.my.domain.auth.controller;
 
+import com.example.my.common.dto.ResDTO;
 import com.example.my.domain.auth.dto.req.ReqJoinDTOApiV1;
 import com.example.my.domain.auth.service.AuthServiceApiV1;
 import jakarta.validation.Valid;
@@ -24,7 +25,7 @@ public class AuthControllerApiV1 {
 //    }
 
     @PostMapping("/join")
-    public ResponseEntity<?> join(@Valid @RequestBody ReqJoinDTOApiV1 dto) {
+    public ResponseEntity<ResDTO<Object>> join(@Valid @RequestBody ReqJoinDTOApiV1 dto) {
         return authServiceApiV1.join(dto);
     }
 

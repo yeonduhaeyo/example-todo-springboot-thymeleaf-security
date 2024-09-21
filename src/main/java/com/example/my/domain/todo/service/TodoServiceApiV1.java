@@ -29,11 +29,11 @@ public class TodoServiceApiV1 {
     private final TodoRepository todoRepository;
     private final UserRepository userRepository;
 
-    public ResponseEntity<?> get(CustomUserDetails customUserDetails) {
+    public ResponseEntity<ResDTO<ResTodoGetDTOApiV1>> get(CustomUserDetails customUserDetails) {
         List<TodoEntity> todoEntityList = todoRepository
                 .findByUserEntity_IdAndDeleteDateIsNull(customUserDetails.getUser().getId());
         return new ResponseEntity<>(
-                ResDTO.builder()
+                ResDTO.<ResTodoGetDTOApiV1>builder()
                         .code(0)
                         .message("할 일 목록 조회에 성공하였습니다.")
                         .data(ResTodoGetDTOApiV1.of(todoEntityList))
@@ -41,7 +41,7 @@ public class TodoServiceApiV1 {
                 HttpStatus.OK);
     }
 
-    public ResponseEntity<?> getWithId(Long id, CustomUserDetails customUserDetails) {
+    public ResponseEntity<ResDTO<ResTodoGetWithIdDTOApiV1>> getWithId(Long id, CustomUserDetails customUserDetails) {
         Optional<TodoEntity> todoEntityOptional = todoRepository.findByIdAndDeleteDateIsNull(id);
         if (todoEntityOptional.isEmpty()) {
             throw new BadRequestException("존재하지 않는 할 일입니다.");
@@ -51,7 +51,7 @@ public class TodoServiceApiV1 {
             throw new BadRequestException("해당 할 일을 조회할 권한이 없습니다.");
         }
         return new ResponseEntity<>(
-                ResDTO.builder()
+                ResDTO.<ResTodoGetWithIdDTOApiV1>builder()
                         .code(0)
                         .message("할 일 조회에 성공하였습니다.")
                         .data(ResTodoGetWithIdDTOApiV1.of(todoEntity))
@@ -60,7 +60,7 @@ public class TodoServiceApiV1 {
     }
 
     @Transactional
-    public ResponseEntity<?> post(ReqTodoPostDTOApiV1 dto, CustomUserDetails customUserDetails) {
+    public ResponseEntity<ResDTO<Object>> post(ReqTodoPostDTOApiV1 dto, CustomUserDetails customUserDetails) {
         if (dto == null || dto.getTodo() == null || dto.getTodo().getContent() == null
                 || dto.getTodo().getContent().isBlank()) {
             throw new BadRequestException("할 일을 입력해주세요.");
@@ -87,7 +87,7 @@ public class TodoServiceApiV1 {
     }
 
     @Transactional
-    public ResponseEntity<?> put(Long id, ReqTodoPutDTOApiV1 dto, CustomUserDetails customUserDetails) {
+    public ResponseEntity<ResDTO<Object>> put(Long id, ReqTodoPutDTOApiV1 dto, CustomUserDetails customUserDetails) {
         Optional<TodoEntity> todoEntityOptional = todoRepository.findByIdAndDeleteDateIsNull(id);
         if (todoEntityOptional.isEmpty()) {
             throw new BadRequestException("존재하지 않는 할 일입니다.");
@@ -106,7 +106,7 @@ public class TodoServiceApiV1 {
     }
 
     @Transactional
-    public ResponseEntity<?> delete(Long id, CustomUserDetails customUserDetails) {
+    public ResponseEntity<ResDTO<Object>> delete(Long id, CustomUserDetails customUserDetails) {
         Optional<TodoEntity> todoEntityOptional = todoRepository.findByIdAndDeleteDateIsNull(id);
         if (todoEntityOptional.isEmpty()) {
             throw new BadRequestException("존재하지 않는 할 일입니다.");

@@ -1,8 +1,11 @@
 package com.example.my.domain.todo.controller;
 
+import com.example.my.common.dto.ResDTO;
 import com.example.my.config.security.auth.CustomUserDetails;
 import com.example.my.domain.todo.dto.req.ReqTodoPostDTOApiV1;
 import com.example.my.domain.todo.dto.req.ReqTodoPutDTOApiV1;
+import com.example.my.domain.todo.dto.res.ResTodoGetDTOApiV1;
+import com.example.my.domain.todo.dto.res.ResTodoGetWithIdDTOApiV1;
 import com.example.my.domain.todo.service.TodoServiceApiV1;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,14 +21,14 @@ public class TodoControllerApiV1 {
     private final TodoServiceApiV1 todoServiceApiV1;
 
     @GetMapping
-    public ResponseEntity<?> get(
+    public ResponseEntity<ResDTO<ResTodoGetDTOApiV1>> get(
             @AuthenticationPrincipal CustomUserDetails customUserDetails
     ) {
         return todoServiceApiV1.get(customUserDetails);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getWithId(
+    public ResponseEntity<ResDTO<ResTodoGetWithIdDTOApiV1>> getWithId(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @PathVariable Long id
     ) {
@@ -33,7 +36,7 @@ public class TodoControllerApiV1 {
     }
 
     @PostMapping
-    public ResponseEntity<?> post(
+    public ResponseEntity<ResDTO<Object>> post(
             @Valid @RequestBody ReqTodoPostDTOApiV1 dto,
             @AuthenticationPrincipal CustomUserDetails customUserDetails
     ) {
@@ -41,7 +44,7 @@ public class TodoControllerApiV1 {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> put(
+    public ResponseEntity<ResDTO<Object>> put(
             @PathVariable Long id,
             @Valid @RequestBody ReqTodoPutDTOApiV1 dto,
             @AuthenticationPrincipal CustomUserDetails customUserDetails
@@ -50,7 +53,7 @@ public class TodoControllerApiV1 {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(
+    public ResponseEntity<ResDTO<Object>> delete(
             @PathVariable Long id,
             @AuthenticationPrincipal CustomUserDetails customUserDetails
     ) {
