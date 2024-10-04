@@ -19,6 +19,7 @@ public class CustomUserDetails implements UserDetails {
 
     private User user;
 
+    // 도메인으로 정의된 객체를 생성하는 생성자 함수
     public static CustomUserDetails of(UserEntity userEntity) {
         return CustomUserDetails.builder()
                 .user(User.fromEntity(userEntity))
